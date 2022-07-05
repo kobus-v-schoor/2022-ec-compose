@@ -1,0 +1,23 @@
+version: '3'
+services:
+  runner:
+    build:
+      context: runner
+    entrypoint: "sleep infinity"
+
+    volumes:
+      - ${PWD}/configs/engine.json:/app/engine/appsettings.json
+      - ${PWD}/configs/runner.json:/app/runner/appsettings.json
+      - ${PWD}/configs/logger.json:/app/logger/appsettings.json
+      - ${PWD}/logs:/app/logger/logs
+
+  bot:
+    build:
+      context: bot
+    entrypoint: "sleep infinity"
+
+    volumes:
+      - ./bot:/app
+
+    environment:
+      RUNNER_IPV4: 'runner'
